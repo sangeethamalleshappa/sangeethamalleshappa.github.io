@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sangeetha M - Portfolio</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary-color: #2a9d8f;
+            --secondary-color: #264653;
+            --accent-color: #e76f51;
+            --light-color: #f8f9fa;
+        }
+
+        body {
+            line-height: 1.6;
+            background-color: var(--light-color);
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+        }
+
+        .profile-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin-bottom: 1rem;
+            border: 4px solid white;
+            background-color: #ddd;
+        }
+
+        /* Navigation */
+        nav {
+            background-color: var(--secondary-color);
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--accent-color);
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        section {
+            margin-bottom: 3rem;
+        }
+
+        h2 {
+            color: var(--secondary-color);
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background-color: var(--accent-color);
+        }
+
+        /* Skills Section */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .skill-card {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .skill-card:hover {
+            transform: translateY(-5px);
+        }
+
+        /* Experience Section */
+        .timeline {
+            position: relative;
+            padding: 2rem 0;
+        }
+
+        .timeline-item {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        /* Education Section */
+        .education-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .education-card {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        /* Resume Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.7);
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 2rem;
+            width: 80%;
+            max-width: 800px;
+            max-height: 80vh;
+            overflow-y: auto;
+            border-radius: 8px;
+            position: relative;
+        }
+
+        .close {
+            position: absolute;
+            right: 1rem;
+            top: 1rem;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background-color 0.3s;
+            cursor: pointer;
+            border: none;
+            margin: 0.5rem;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-secondary {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--secondary-color);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            nav ul {
+                flex-direction: column;
+                text-align: center;
+                gap: 1rem;
+            }
+
+            .container {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="sangu.jpg" alt="Profile picture of Sangeetha M" class="profile-img">
+        <h1>Sangeetha M</h1>
+        <p>Clinical Data Management Associate</p>
+        <div class="header-buttons">
+            <button class="btn btn-primary" onclick="viewResume()">View Resume</button>
+            <button class="btn btn-secondary" onclick="downloadResume()">Download Resume</button>
+        </div>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#about">About</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#experience">Experience</a></li>
+            <li><a href="#education">Education</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <main class="container">
+        <section id="about">
+            <h2>About Me</h2>
+            <p>Looking for a challenging position in the field of Clinical Data Management in an organization that will allow me to grow personally and professionally. With quick learning capabilities and a strong team spirit, I aim to contribute effectively while building a successful career in Research and Development.</p>
+        </section>
+
+        <section id="skills">
+            <h2>Skills</h2>
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <h3><i class="fas fa-desktop"></i> Microsoft Office</h3>
+                    <p>Proficient in MS Word, Excel and Presentations</p>
+                </div>
+                <div class="skill-card">
+                    <h3><i class="fab fa-aws"></i> AWS</h3>
+                    <p>Experience with AWS Virtual Desktop</p>
+                </div>
+                <div class="skill-card">
+                    <h3><i class="fas fa-database"></i> Oracle DMW</h3>
+                    <p>Data model creation, review and monitoring</p>
+                </div>
+                <div class="skill-card">
+                    <h3><i class="fas fa-chart-bar"></i> Power BI</h3>
+                    <p>Data visualization and analysis</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="experience">
+            <h2>Experience</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <h3>Clinical Data Management Associate</h3>
+                    <p>Accenture Solutions Pvt Ltd | Jan 2022 - Present</p>
+                    <ul>
+                        <li>Providing technical solutions in functional areas</li>
+                        <li>Vendor qualification assessment</li>
+                        <li>Data transfer specification creation</li>
+                        <li>Clinical Data loading and monitoring</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="education">
+            <h2>Education</h2>
+            <div class="education-grid">
+                <div class="education-card">
+                    <h3>Master of Science (MSc)</h3>
+                    <p>Biotechnology</p>
+                    <p>Kuvempu University | 2021</p>
+                    <p>CGPA: 7.71</p>
+                </div>
+                <div class="education-card">
+                    <h3>Bachelor of Science (BSc)</h3>
+                    <p>Biotechnology, Botany, Chemistry</p>
+                    <p>Kuvempu University | 2019</p>
+                    <p>Percentage: 73%</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact">
+            <h2>Contact</h2>
+            <div class="contact-info">
+                <p><i class="fas fa-envelope"></i> sangushimoga99808@gmail.com</p>
+                <p><i class="fas fa-phone"></i> 8951419309</p>
+                <p><i class="fas fa-map-marker-alt"></i> Tunga Channel Left Side, Vinayak Nagar Shimoga</p>
+            </div>
+        </section>
+    </main>
+
+    <div id="resumeModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2>Resume</h2>
+            <iframe id="resumeContent" style="width: 100%; height: 500px;" frameborder="0"></iframe>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Sangeetha M. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // View resume functionality
+        function viewResume() {
+            const modal = document.getElementById('resumeModal');
+            const resumeContent = document.getElementById('resumeContent');
+
+            // Set the src of the iframe to the PDF file URL
+            resumeContent.src = 'sangu.pdf.pdf'; // Replace with your PDF path
+            
+            modal.style.display = 'block';
+        }
+
+        // Close modal
+        function closeModal() {
+            document.getElementById('resumeModal').style.display = 'none';
+        }
+
+        // Download resume functionality
+        function downloadResume() {
+            const resumeText = `
+SANGEETHA M
+Contact: sangushimoga99808@gmail.com | 8951419309
+
+CAREER OBJECTIVE
+${document.querySelector('#about p').textContent}
+
+PROFESSIONAL EXPERIENCE
+Clinical Data Management Associate
+Accenture Solutions Pvt Ltd | Jan 2022 - Present
+
+SKILLS
+- Microsoft Office (MS Word, Excel, Presentations)
+- AWS Virtual Desktop
+- Oracle DMW
+- Power BI
+- Data Process Trainer
+
+EDUCATION
+Master of Science (MSc) in Biotechnology
+Kuvempu University | 2021
+CGPA: 7.71
+
+Bachelor of Science (BSc)
+Biotechnology, Botany, Chemistry
+Kuvempu University | 2019
+Percentage: 73%
+            `;
+
+            const blob = new Blob([resumeText], { type: 'text/plain' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'sangu.pdf.pdf';
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+            document.body.removeChild(a);
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('resumeModal');
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
+
+        // Smooth scrolling for navigation
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const section = document.querySelector(this.getAttribute('href'));
+                section.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+    </script>
+</body>
+</html>
